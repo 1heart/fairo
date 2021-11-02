@@ -36,7 +36,6 @@ def fetch_artifact_from_aws(agent, artifact_name, model_name, checksum_file_name
     print("CHECKSUM: %r" % checksum_val)
 
     artifact_path = os.path.join(agent_path, artifact_name)
-    original_artifact_name = artifact_name
     if artifact_name == "models":
         if not model_name:
             model_name = "nlu"
@@ -70,8 +69,8 @@ def fetch_artifact_from_aws(agent, artifact_name, model_name, checksum_file_name
         shutil.rmtree(artifact_path, ignore_errors=True) # force delete if directory has content in it
     mode = 0o777
     os.mkdir(artifact_path, mode)
-    write_path = os.path.join('agents/', agent, original_artifact_name)
-    print(write_path)
+    write_path = artifact_path
+    print("Writing to : %r" % write_path)
     process = Popen(
         [
             'tar',
